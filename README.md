@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CallCoach
 
-## Getting Started
+Gong-style call review for sales teams.
 
-First, run the development server:
+![next.js](https://img.shields.io/badge/Next.js-16-000?style=flat-square&logo=nextdotjs&logoColor=white)
+![typescript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white)
+![tailwind](https://img.shields.io/badge/Tailwind-4-06b6d4?style=flat-square&logo=tailwindcss&logoColor=white)
+![framer-motion](https://img.shields.io/badge/Framer_Motion-12-ec4899?style=flat-square)
+
+CallCoach reviews every sales call for your team. Each transcript is annotated with AI-flagged moments — discovery questions, pricing objections, talkovers, filler words, champion signals — and rolled up into a 12-week scorecard per rep.
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev -- -p 3004
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3004>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build   # production build
+npm run start   # serve build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Routes
 
-## Learn More
+| Path | What |
+| --- | --- |
+| `/` | Live call queue — 16 calls, sortable, filterable (My calls / Team / Flagged) |
+| `/call/[id]` | Transcript view — waveform, inline AI annotations, summary rail, action items |
+| `/scorecard` | Rep scorecard — 8 reps, 5 metrics, 12-week trend lines, 5 coaching clips |
 
-To learn more about Next.js, take a look at the following resources:
+## Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js 16 (App Router) + Turbopack
+- TypeScript, Tailwind CSS v4 design tokens
+- Framer Motion entrance animations
+- lucide-react icons
+- Inter / Space Grotesk / JetBrains Mono via `next/font`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Screenshots
 
-## Deploy on Vercel
+> Captured by QA after merge.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- ![hero](./public/screenshots/hero.png)
+- ![dashboard](./public/screenshots/dashboard.png)
+- ![detail](./public/screenshots/detail.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Layout
+
+```
+src/
+  app/
+    page.tsx              -> /
+    call/[id]/page.tsx    -> /call/:id
+    scorecard/page.tsx    -> /scorecard
+  views/
+    CallQueue.tsx
+    CallDetail.tsx
+    Scorecard.tsx
+  components/
+    Shell.tsx
+    Avatar.tsx
+    Waveform.tsx
+    TrendChart.tsx
+    SentimentChip.tsx
+    ScorePill.tsx
+    TalkRatioBar.tsx
+  data/
+    reps.ts
+    calls.ts
+    transcripts.ts
+    coaching.ts
+  lib/
+    format.ts
+```
